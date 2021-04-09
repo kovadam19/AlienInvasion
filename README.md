@@ -4,5 +4,7 @@ A simple pygame application based on "Python Crash Course" (2nd edition) by Eric
 
 Some upgrades were added:
 - The ship can move up and down
+- One extra bullet after 5000 points
+- Increased bullet speed after every third destroyed alien fleet
 
 Usage: Run main.py
