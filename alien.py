@@ -10,6 +10,9 @@ class ALien(Sprite):
         self.screen = ai_game.screen
         self.settings = ai_game.settings
 
+        # Alien type
+        self.type = "simple"
+
         # Load the alien image and set its rect attribute
         self.image = pygame.image.load("images/alien.bmp")
         self.rect = self.image.get_rect()
@@ -17,6 +20,9 @@ class ALien(Sprite):
         # Start each new alien near the top left of the screen
         self.rect.x = self.rect.width
         self.rect.y = self.rect.height
+
+        # Set the life of the alien
+        self.life = 1
 
         # Store the alien's exact horizontal position
         self.x = float(self.rect.x)
