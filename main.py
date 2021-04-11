@@ -11,7 +11,10 @@ from ship import Ship
 from bullet import Bullet
 from alien import ALien
 from super_alien import SuperALien
+from queen_alien import QueenALien
+from alien_bullet import AlienBullet
 
+FIREQUEENBULLET = pygame.USEREVENT + 1
 
 class AlienInvasion:
     """Overall class to manage game assets and behaviour"""
@@ -31,6 +34,7 @@ class AlienInvasion:
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
+        self.alien_bullets = pygame.sprite.Group()
 
         self._create_fleet()
 
@@ -44,8 +48,9 @@ class AlienInvasion:
 
             if self.stats.game_active:
                 self.ship.update()
-                self._update_bullets()
                 self._update_aliens()
+                self._update_bullets()
+                self._update_alien_bullets()
 
             self._update_screen()
 
@@ -61,6 +66,8 @@ class AlienInvasion:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
+            elif event.type == FIREQUEENBULLET:
+                self._fire_queen_bullet()
 
     def _check_keydown_events(self, event):
         """Respond to key presses"""
@@ -138,6 +145,11 @@ class AlienInvasion:
             new_bullet = Bullet(self)
             self.bullets.add(new_bullet)
 
+    def _fire_queen_bullet(self):
+        """Creates a new bullet for the queen and adds it to the bullet group"""
+        new_bullet = AlienBullet(self)
+        self.alien_bullets.add(new_bullet)
+
     def _update_bullets(self):
         """Update position of bullets and delete the old ones"""
         # Update bullet position
@@ -148,7 +160,24 @@ class AlienInvasion:
             if bullet.rect.bottom <= 0:
                 self.bullets.remove(bullet)
 
+        # Check if any ship bullet hit an alien
         self._check_bullet_alien_collisions()
+
+        # Check if the fleet is empty
+        self._check_fleet_empty()
+
+    def _update_alien_bullets(self):
+        """Update position of alien bullets and delete the old ones"""
+        # Update bullet position
+        self.alien_bullets.update()
+
+        # Delete bullets that reached the top of the screen
+        for bullet in self.alien_bullets.sprites():
+            if bullet.rect.top >= self.screen.get_height():
+                self.alien_bullets.remove(bullet)
+
+        # Check if any alien bullet hit the ship
+        self._check_bullet_ship_collision()
 
     def _check_bullet_alien_collisions(self):
         """Respond to bullet-alien collisions"""
@@ -184,6 +213,18 @@ class AlienInvasion:
                         self.aliens.remove(alien)
                         # Increase the score
                         self.stats.score += self.settings.super_alien_points
+                    # Check if the alien is queen alien and it is destroyed
+                    elif alien.life == 0 and alien.type == "queen":
+                        # Remove queen alien
+                        self.aliens.remove(alien)
+                        # Stop event timer for the bullets
+                        pygame.time.set_timer(FIREQUEENBULLET, 0)
+                        # Increase the score
+                        self.stats.score += self.settings.queen_alien_points
+                        # Increase the ship limit
+                        if self.stats.ships_left < self.settings.ship_limit:
+                            self.stats.ships_left += 1
+                            self.sb.prep_ships()
 
             # Prep score and check high score
             self.sb.prep_score()
@@ -193,6 +234,18 @@ class AlienInvasion:
             if self.stats.score != 0 and self.stats.score % 5000 == 0:
                 self.settings.bullets_allowed += 1
 
+    def _check_bullet_ship_collision(self):
+        """Respond to bullet-ship collision"""
+        # Check if any alien bullet hit the ship
+        collisions = pygame.sprite.spritecollideany(self.ship, self.alien_bullets)
+
+        # If so then run the ship-hit method and stop firing alien bullets
+        if collisions:
+            self._ship_hit()
+            pygame.time.set_timer(FIREQUEENBULLET, 0)
+
+    def _check_fleet_empty(self):
+        """Check if the fleet is empty and creates a new one or a queen alien"""
         # Check if the fleet is empty
         if not self.aliens:
             # Center the ship
@@ -200,12 +253,34 @@ class AlienInvasion:
 
             # Destroy existing bullets and create new fleet
             self.bullets.empty()
-            self._create_fleet()
-            self.settings.increase_speed()
+            self.alien_bullets.empty()
+
+            if random() > self.settings.queen_alien_chance:
+                # Create a normal fleet
+                self._create_fleet()
+
+                # Increase speed
+                self.settings.increase_speed()
+            else:
+                # Create a queen alien
+                new_queen_alien = QueenALien(self)
+
+                # Calculate the position of the queen, it appears at a random position in direction X
+                random_number = 0.25 + (random() * 0.5)
+                new_queen_alien.x = random_number * (self.screen.get_width() / 2)
+                new_queen_alien.rect.x = new_queen_alien.x
+                new_queen_alien.rect.y = (self.screen.get_height() / 2 - (3 * new_queen_alien.rect.height))
+
+                # Add the super alien to the fleet
+                self.aliens.add(new_queen_alien)
+
+                # Set an event timer for the queen alien to fire bullets
+                pygame.time.set_timer(FIREQUEENBULLET, self.settings.queen_bullet_fire_time)
 
             # Increase the number of destroyed fleet
             self.stats.destroyed_fleets += 1
 
+            # Check if the fleet number is even (increase bullet speed)
             if self.stats.destroyed_fleets % 2 == 0:
                 self.settings.bullet_speed *= self.settings.speedup_scale
 
@@ -284,6 +359,7 @@ class AlienInvasion:
             # Get rid of the any remaining aliens or bullets
             self.aliens.empty()
             self.bullets.empty()
+            self.alien_bullets.empty()
 
             # Create a new fleet and center the ship
             self._create_fleet()
@@ -312,9 +388,16 @@ class AlienInvasion:
         # Redraw the screen during each pass through the loop
         self.screen.fill(self.settings.bg_color)
         self.ship.blitme()
+
+        # Draw ship bullets
         for bullet in self.bullets.sprites():
             bullet.draw_bullet()
 
+        # Draw alien bullets
+        for bullet in self.alien_bullets.sprites():
+            bullet.draw_bullet()
+
+        # Draw aliens
         self.aliens.draw(self.screen)
 
         # Draw score information

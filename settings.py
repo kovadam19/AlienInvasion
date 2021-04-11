@@ -9,16 +9,20 @@ class Settings:
         self.bg_color = (230, 230, 230)
 
         # Ship settings
-        self.ship_limit = 3
+        self.ship_limit = 5
 
         # Bullet settings
         self.bullet_width = 3
         self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
+        self.queen_bullet_color = (255, 0, 0)
+        self.queen_bullet_speed = 1.5
+        self.queen_bullet_fire_time = 1000
 
         # Alien settings
         self.fleet_drop_speed = 10
         self.super_alien_chance = 0.1
+        self.queen_alien_chance = 0.25
 
         # How quickly the game speeds up
         self.speedup_scale = 1.1
@@ -39,6 +43,7 @@ class Settings:
         # Scoring
         self.alien_points = 50
         self.super_alien_points = 150
+        self.queen_alien_points = 500
 
     def increase_speed(self):
         """Increase speed settings and alien point values"""
@@ -47,3 +52,4 @@ class Settings:
         self.alien_speed *= self. speedup_scale
         self.alien_points = int(self.score_scale * self.alien_points)
         self.super_alien_points = int(self.score_scale * self.super_alien_points)
+        self.queen_alien_points = int(self.score_scale * self.queen_alien_points)
