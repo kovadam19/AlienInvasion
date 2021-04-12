@@ -85,7 +85,11 @@ open the *all_time_high_score.txt* file and replace the current value with zero.
 If you wish to change the game settings, making it harder or easier, then you can find
 all the settings in the *setting.py* file.
 
-## Running the game
+## Running the game :video_game:
 You can start the game by running the *main.py* file.
 
 The game was tested on [Ubuntu 20.04 (Focal Fossa)](https://releases.ubuntu.com/20.04/).
+
+## Ending the game :video_game:
+You can quit from the game by clicking on the close button at the top right corner of the window.
+Or you can hit the *q* button on your keyboard.
