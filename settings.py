@@ -20,6 +20,9 @@ class Settings:
         self.queen_bullet_fire_time = 1000
 
         # Alien settings
+        self.alien_life = 1
+        self.super_alien_life = 3
+        self.queen_alien_life = 15
         self.fleet_drop_speed = 10
         self.super_alien_chance = 0.1
         self.queen_alien_chance = 0.25
@@ -29,7 +32,9 @@ class Settings:
 
         # How quickly the alien point values increase
         self.score_scale = 1.2
+        self.all_time_high_score_file = "all_time_high_score.txt"
 
+        # Initialize dynamic settings
         self.initialize_dynamic_settings()
 
     def initialize_dynamic_settings(self):

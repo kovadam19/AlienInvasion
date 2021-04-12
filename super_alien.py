@@ -16,4 +16,4 @@ class SuperALien(ALien):
         self.image = pygame.image.load("images/super_alien.bmp")
 
         # Set the life of the super alien
-        self.life = 3
+        self.life = self.settings.super_alien_life

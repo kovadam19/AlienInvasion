@@ -16,4 +16,4 @@ class QueenALien(ALien):
         self.image = pygame.image.load("images/queen_alien.bmp")
 
         # Set the life of the queen alien
-        self.life = 15
+        self.life = self.settings.queen_alien_life

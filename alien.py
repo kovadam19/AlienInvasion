@@ -22,7 +22,7 @@ class ALien(Sprite):
         self.rect.y = self.rect.height
 
         # Set the life of the alien
-        self.life = 1
+        self.life = self.settings.alien_life
 
         # Store the alien's exact horizontal position
         self.x = float(self.rect.x)
