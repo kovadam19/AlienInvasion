@@ -1,12 +1,23 @@
+##################################################
+# Project: Alien Invasion
+# Author: Adam Kovacs
+# Version: 1.0.0
+# Maintainer: Adam Kovacs
+# E-mail: kovadam19@gmail.com
+# Released: 13 April 2021
+##################################################
+
+# Generic/Built-in imports
 import pygame
 from pygame.sprite import Sprite
+
 
 class Bullet(Sprite):
     """A class to manage bullets fired from the ship"""
 
     def __init__(self, ai_game):
         """Create a bullet object at the ship's current position"""
-
+        # Initialise the sprite and get game screen & settings
         super().__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings

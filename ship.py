@@ -1,3 +1,13 @@
+##################################################
+# Project: Alien Invasion
+# Author: Adam Kovacs
+# Version: 1.0.0
+# Maintainer: Adam Kovacs
+# E-mail: kovadam19@gmail.com
+# Released: 13 April 2021
+##################################################
+
+# Generic/Built-in imports
 import pygame
 from pygame.sprite import Sprite
 

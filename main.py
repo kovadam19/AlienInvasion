@@ -1,8 +1,19 @@
+##################################################
+# Project: Alien Invasion
+# Author: Adam Kovacs
+# Version: 1.0.0
+# Maintainer: Adam Kovacs
+# E-mail: kovadam19@gmail.com
+# Released: 13 April 2021
+##################################################
+
+# Generic/Built-in imports
 import sys
 import pygame
 from time import sleep
 from random import random
 
+# Other modules
 from settings import Settings
 from game_stats import GameStats
 from scoreboard import Scoreboard
@@ -14,16 +25,22 @@ from super_alien import SuperALien
 from queen_alien import QueenALien
 from alien_bullet import AlienBullet
 
+# Global constants
 FIREQUEENBULLET = pygame.USEREVENT + 1
+
 
 class AlienInvasion:
     """Overall class to manage game assets and behaviour"""
 
     def __init__(self):
         """Initialize the game, and create game resources"""
+        # Initialize the game
         pygame.init()
+
+        # Get the settings
         self.settings = Settings()
 
+        # Display and caption
         self.screen = pygame.display.set_mode((self.settings.screen_width, self.settings.screen_height))
         pygame.display.set_caption("Alien Invasion by Adam")
 
@@ -31,11 +48,11 @@ class AlienInvasion:
         self.stats = GameStats(self)
         self.sb = Scoreboard(self)
 
+        # Game components
         self.ship = Ship(self)
         self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
         self.alien_bullets = pygame.sprite.Group()
-
         self._create_fleet()
 
         # Make play button
@@ -44,14 +61,17 @@ class AlienInvasion:
     def run_game(self):
         """Start the main loop for the game"""
         while True:
+            # Check the event
             self._check_events()
 
+            # If the game is active
             if self.stats.game_active:
                 self.ship.update()
                 self._update_aliens()
                 self._update_bullets()
                 self._update_alien_bullets()
 
+            # Update screen
             self._update_screen()
 
     def _check_events(self):

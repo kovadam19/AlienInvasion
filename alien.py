@@ -1,11 +1,23 @@
+##################################################
+# Project: Alien Invasion
+# Author: Adam Kovacs
+# Version: 1.0.0
+# Maintainer: Adam Kovacs
+# E-mail: kovadam19@gmail.com
+# Released: 13 April 2021
+##################################################
+
+# Generic/Built-in imports
 import pygame
 from pygame.sprite import Sprite
+
 
 class ALien(Sprite):
     """A class to represent a single alien in the fleet"""
 
     def __init__(self, ai_game):
         """Initialize the alien and sets its starting position"""
+        # Initialise the sprite and get game screen & settings
         super().__init__()
         self.screen = ai_game.screen
         self.settings = ai_game.settings

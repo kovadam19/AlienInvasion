@@ -1,8 +1,8 @@
 # Alien :alien: Invasion by Adam
 
-## Motivation :smile:
+## Motivation :bulb:
 I wanted to learn more about Python programming, especially about [pygame](https://www.pygame.org/news). 
-So, I started to work on this simple video game :video_game: application based on [Python Crash Course (2nd edition) by Eric Matthes](https://nostarch.com/pythoncrashcourse2e)
+So, I started to work on this simple video game application based on [Python Crash Course (2nd edition) by Eric Matthes](https://nostarch.com/pythoncrashcourse2e)
 
 ## Upgrades :arrow_up:
 After the initial game was finished based on the book, some upgrades were added:
@@ -23,7 +23,7 @@ After the initial game was finished based on the book, some upgrades were added:
 
 In this section the basic game components and settings are summarized.
 
-### Startup screen
+### Startup screen :computer:
 When the player runs the game the startup screen pops up, see below!
 
 On the top left corner, you can see the number of ships (lifes) you have. 
@@ -34,7 +34,7 @@ In the center of the screen, the play button is shown. If you click on it the ga
 
 ![Startup Screen](doc_images/StartupScreen.png "Startup Screen")
 
-### Spaceship
+### Spaceship :rocket:
 The spaceship (see below) is located at the bottom-center of the screen.
 
 You can control the spaceship with the following buttons:
@@ -49,7 +49,7 @@ You can control the spaceship with the following buttons:
   
 ![Spaceship](doc_images/ship.bmp "Spacesip")
 
-### Alien fleet
+### Alien fleet :alien:
 Basically, the alien fleet consists of normal aliens, see below!
 
 A normal alien dies as it gets hit by bullet shot by the spaceship. 
@@ -58,7 +58,7 @@ If any alien reaches the bottom of the screen or collides with the spaceship the
 
 ![Normal alien](doc_images/alien.bmp "Normal alien")
 
-### Super alien
+### Super alien :space_invader:
 When a normal alien is defeated, there is a chance it turns into a super alien, see below!
 
 A super alien is three times stronger than a normal one, so it can be defeated by three bullets.
@@ -66,7 +66,7 @@ All the other behaviour of the super alien is similar to the normal alien.
 
 ![Super alien](doc_images/super_alien.bmp "Super alien")
 
-### Alien queen
+### Alien queen :crown:
 When the entire fleet is defeated, there is a chance an alien queen appears, see below!
 
 The alien queen is very strong, it can take fifteen bullet hits before it dies. 
@@ -77,19 +77,19 @@ The player can only five extra ships at the same time.
 
 ![Alien queen](doc_images/queen_alien.bmp "Alien quenn")
 
-### Resetting high score
+### Resetting high score :star:
 If you wish to reset the all-time high score, then you have to close the game. Then you have to
 open the *all_time_high_score.txt* file and replace the current value with zero.
 
-### Changing game settings
+### Changing game settings :memo:
 If you wish to change the game settings, making it harder or easier, then you can find
 all the settings in the *setting.py* file.
 
-## Running the game :video_game:
+## Running the game :runner:
 You can start the game by running the *main.py* file.
 
 The game was tested on [Ubuntu 20.04 (Focal Fossa)](https://releases.ubuntu.com/20.04/).
 
-## Ending the game :video_game:
+## Ending the game :end:
 You can quit from the game by clicking on the close button at the top right corner of the window.
 Or you can hit the *q* button on your keyboard.
